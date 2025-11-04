@@ -133,23 +133,15 @@
   <audio id="alertSound" src="alert.mp3" preload="auto"></audio>
 
 <script>
-  const alertSound = document.getElementById("alertSound");
+  const alertSound = document.getElementById('alertSound');
 
-  // Try playing once page loads (might be blocked)
-  window.addEventListener("load", () => {
-    alertSound.play().catch(() => {
-      console.log("Waiting for user interaction...");
-    });
-  });
-
-  // Force play once user interacts (works on all browsers)
-  const enableSound = () => {
+  // plays sound after user interacts (bypasses autoplay block)
+  function playSound() {
     alertSound.play().catch(err => console.log(err));
-    document.body.removeEventListener("click", enableSound);
-    document.body.removeEventListener("touchstart", enableSound);
-  };
+  }
 
-  document.body.addEventListener("click", enableSound);
-  document.body.addEventListener("touchstart", enableSound);
+  // Play sound when page is clicked or touched
+  document.addEventListener('click', playSound);
+  document.addEventListener('touchstart', playSound);
 </script>
 </html>
